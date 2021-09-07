@@ -13,10 +13,10 @@ const bankAccount = require('./app/bankAccount/model');
 users.hasMany(orders);
 orders.belongsTo(users);
 
-orders.hasOne(templates);
-orders.hasOne(audios);
-templates.belongsToMany(orders, { through: 'orderTemplates' });
-audios.belongsToMany(orders, { through: 'orderAudios' });
+templates.hasMany(orders);
+audios.hasMany(orders);
+orders.belongsTo(templates);
+orders.belongsTo(audios);
 
 orders.hasOne(brides);
 brides.belongsTo(orders);
@@ -39,10 +39,10 @@ bankAccount.belongsTo(orders);
 // sync table to database
 const syncDB = async () => {
   try {
-    await users.sync({ force: true });
-    await orders.sync({ force: true });
     await audios.sync({ force: true });
     await templates.sync({ force: true });
+    await users.sync({ force: true });
+    await orders.sync({ force: true });
     await brides.sync({ force: true });
     await bridePhotos.sync({ force: true });
     await galleryPhotos.sync({ force: true });

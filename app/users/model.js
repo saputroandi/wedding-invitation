@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const audios = sequelize.define(
-  'audios',
+const users = sequelize.define(
+  'users',
   {
     id: {
       type: DataTypes.BIGINT.UNSIGNED,
@@ -33,4 +33,4 @@ const audios = sequelize.define(
   }
 );
 
-module.exports = audios;
+module.exports = users;
