@@ -1,19 +1,15 @@
+const Sequelize = require('sequelize');
 const { errorHandler } = require('../utils/handler');
 const templates = require('./model');
 
 const index = async (req, res, next) => {
   try {
-    // const { id = '' } = req.query;
-    // console.log(id.length);
-    // if (id.length) console.log('hit');
     const result = await templates.findAll();
 
     return res.json({
       result: result,
-      // id: id,
     });
   } catch (e) {
-    console.log(e);
     if (e instanceof Sequelize.ValidationError) {
       const errorMessages = errorHandler(e);
       return res.status(400).json({

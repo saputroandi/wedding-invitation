@@ -7,7 +7,7 @@ const errorHandler = (e) => {
     // custom error message based on validatorKey
     switch (error.validatorKey) {
       case 'is_null':
-        message = 'Please complete this field';
+        message = 'Field ini tidak boleh kosong';
         break;
 
       case 'not_unique':
