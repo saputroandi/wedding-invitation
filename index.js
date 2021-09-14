@@ -5,6 +5,8 @@ const { port } = require('./app/config');
 
 // import router
 // const cardInfoRouter = require('./app/cardInfo/router');
+const { decodeToken } = require('./app/auth/middleware');
+const authRouter = require('./app/auth/router');
 const templatesRouter = require('./app/templates/router');
 const audiosRouter = require('./app/audios/router');
 
@@ -13,11 +15,11 @@ const app = express();
 // serve static files
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// middleware
+app.use(decodeToken());
 
 // add routes below
+app.use('/auth', authRouter);
 app.use('/api/templates', templatesRouter);
 app.use('/api/audios', audiosRouter);
 // app.use('/api/card-info', cardInfoRouter);

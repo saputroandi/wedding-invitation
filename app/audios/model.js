@@ -12,6 +12,7 @@ const audios = sequelize.define(
     audiosName: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
   },
   {
