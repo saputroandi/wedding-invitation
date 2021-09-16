@@ -20,6 +20,18 @@ const orders = sequelize.define(
     slug: {
       type: DataTypes.STRING,
     },
+    userId: {
+      type: DataTypes.BIGINT.UNSIGNED,
+      allowNull: false,
+    },
+    templateId: {
+      type: DataTypes.BIGINT.UNSIGNED,
+      allowNull: false,
+    },
+    audioId: {
+      type: DataTypes.BIGINT.UNSIGNED,
+      allowNull: false,
+    },
   },
   {
     // Other model options go here

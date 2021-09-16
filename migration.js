@@ -10,30 +10,84 @@ const alsoInvite = require('./app/alsoInvite/model');
 const bankAccount = require('./app/bankAccount/model');
 
 // write table relation below this line
-users.hasMany(orders);
+users.hasMany(orders, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 orders.belongsTo(users);
 
-templates.hasMany(orders);
-audios.hasMany(orders);
+templates.hasMany(orders, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+audios.hasMany(orders, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 orders.belongsTo(templates);
 orders.belongsTo(audios);
 
-orders.hasOne(brides);
+orders.hasOne(brides, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 brides.belongsTo(orders);
 
-orders.hasOne(bridePhotos);
+orders.hasOne(bridePhotos, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 bridePhotos.belongsTo(orders);
 
-orders.hasMany(galleryPhotos);
+orders.hasMany(galleryPhotos, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 galleryPhotos.belongsTo(orders);
 
-orders.hasOne(cardInfo);
+orders.hasOne(cardInfo, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 cardInfo.belongsTo(orders);
 
-orders.hasMany(alsoInvite);
+orders.hasMany(alsoInvite, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 alsoInvite.belongsTo(orders);
 
-orders.hasMany(bankAccount);
+orders.hasMany(bankAccount, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 bankAccount.belongsTo(orders);
 
 // sync table to database

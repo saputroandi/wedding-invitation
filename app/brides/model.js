@@ -49,6 +49,10 @@ const brides = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    orderId: {
+      type: DataTypes.BIGINT.UNSIGNED,
+      allowNull: false,
+    },
   },
   {
     // Other model options go here

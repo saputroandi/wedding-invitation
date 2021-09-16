@@ -9,6 +9,7 @@ const { decodeToken } = require('./app/auth/middleware');
 const authRouter = require('./app/auth/router');
 const templatesRouter = require('./app/templates/router');
 const audiosRouter = require('./app/audios/router');
+const ordersRouter = require('./app/orders/router');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(decodeToken());
 app.use('/auth', authRouter);
 app.use('/api/templates', templatesRouter);
 app.use('/api/audios', audiosRouter);
+app.use('/api/orders', ordersRouter);
 // app.use('/api/card-info', cardInfoRouter);
 
 // catch 404 and forward to error handler

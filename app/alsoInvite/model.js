@@ -16,6 +16,10 @@ const alsoInvite = sequelize.define(
     position: {
       type: DataTypes.STRING,
     },
+    orderId: {
+      type: DataTypes.BIGINT.UNSIGNED,
+      allowNull: false,
+    },
   },
   {
     // Other model options go here

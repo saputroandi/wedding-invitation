@@ -28,6 +28,10 @@ const cardInfo = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    orderId: {
+      type: DataTypes.BIGINT.UNSIGNED,
+      allowNull: false,
+    },
   },
   {
     // Other model options go here
