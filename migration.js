@@ -23,15 +23,11 @@ templates.hasMany(orders, {
   foreignKey: {
     allowNull: false,
   },
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
 });
 audios.hasMany(orders, {
   foreignKey: {
     allowNull: false,
   },
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
 });
 orders.belongsTo(templates);
 orders.belongsTo(audios);
