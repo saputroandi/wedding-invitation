@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const bridePhotos = sequelize.define(
+const BridePhoto = sequelize.define(
   'bridePhotos',
   {
     id: {
@@ -24,7 +24,8 @@ const bridePhotos = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = bridePhotos;
+module.exports = BridePhoto;

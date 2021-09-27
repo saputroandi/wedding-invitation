@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 const { errorHandler } = require('../utils/handler');
-const templates = require('./model');
+const Template = require('./model');
 
 const index = async (req, res, next) => {
   try {
-    const result = await templates.findAll();
+    const result = await Template.findAll();
 
     return res.json({
       result: result,
@@ -25,7 +25,7 @@ const store = async (req, res, next) => {
   try {
     const payload = req.body;
 
-    const result = await templates.create(payload);
+    const result = await Template.create(payload);
 
     return res.json({
       result: result,
@@ -48,7 +48,7 @@ const update = async (req, res, next) => {
     const { id } = req.params;
     const payload = req.body;
 
-    const result = await templates.update(payload, {
+    const result = await Template.update(payload, {
       where: {
         id: id,
       },
@@ -74,7 +74,7 @@ const destroy = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const result = await templates.destroy({ where: { id: id } });
+    const result = await Template.destroy({ where: { id: id } });
     return res.json({
       result: result,
     });

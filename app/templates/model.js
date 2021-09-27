@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const templates = sequelize.define(
+const Template = sequelize.define(
   'templates',
   {
     id: {
@@ -20,7 +20,8 @@ const templates = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = templates;
+module.exports = Template;

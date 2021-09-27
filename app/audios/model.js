@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const audios = sequelize.define(
+const Audio = sequelize.define(
   'audios',
   {
     id: {
@@ -17,7 +17,8 @@ const audios = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = audios;
+module.exports = Audio;

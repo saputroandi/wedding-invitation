@@ -1,10 +1,10 @@
-const { DataTypes, ValidationError, Sequelize } = require('sequelize');
+const { DataTypes, ValidationError } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../utils/database');
 
 const HASH_ROUND = 10;
 
-const users = sequelize.define(
+const User = sequelize.define(
   'users',
   {
     id: {
@@ -18,8 +18,8 @@ const users = sequelize.define(
       validate: {
         isEmail: true,
         async uniqueEmails(email) {
-          const user = await users.findOne({ where: { email: email } });
-          if (user) throw new ValidationError('email has been taken');
+          const userMail = await User.findOne({ where: { email: email } });
+          if (userMail) throw new ValidationError('email has been taken');
         },
       },
     },
@@ -37,6 +37,7 @@ const users = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
     hooks: {
       beforeCreate(user, options) {
         user.password = bcrypt.hashSync(user.password, HASH_ROUND);
@@ -50,4 +51,4 @@ const users = sequelize.define(
   }
 );
 
-module.exports = users;
+module.exports = User;

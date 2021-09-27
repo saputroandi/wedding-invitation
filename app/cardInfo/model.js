@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const cardInfo = sequelize.define(
-  'cardInfo',
+const CardInfo = sequelize.define(
+  'cardInfos',
   {
     id: {
       type: DataTypes.BIGINT.UNSIGNED,
@@ -35,7 +35,8 @@ const cardInfo = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = cardInfo;
+module.exports = CardInfo;

@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const bankAccount = sequelize.define(
-  'bankAccount',
+const BankAccount = sequelize.define(
+  'bankAccounts',
   {
     id: {
       type: DataTypes.BIGINT.UNSIGNED,
@@ -28,7 +28,8 @@ const bankAccount = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = bankAccount;
+module.exports = BankAccount;

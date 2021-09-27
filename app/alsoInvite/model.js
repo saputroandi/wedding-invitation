@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const alsoInvite = sequelize.define(
-  'alsoInvite',
+const AlsoInvite = sequelize.define(
+  'alsoInvites',
   {
     id: {
       type: DataTypes.BIGINT.UNSIGNED,
@@ -23,7 +23,8 @@ const alsoInvite = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = alsoInvite;
+module.exports = AlsoInvite;

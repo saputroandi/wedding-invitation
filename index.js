@@ -4,12 +4,12 @@ const createError = require('http-errors');
 const { port } = require('./app/config');
 
 // import router
-// const cardInfoRouter = require('./app/cardInfo/router');
 const { decodeToken } = require('./app/auth/middleware');
 const authRouter = require('./app/auth/router');
 const templatesRouter = require('./app/templates/router');
 const audiosRouter = require('./app/audios/router');
 const ordersRouter = require('./app/orders/router');
+// const cardInfoRouter = require('./app/cardInfo/router');
 
 const app = express();
 

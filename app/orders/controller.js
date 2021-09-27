@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
-const orders = require('./model');
-const audios = require('../audios/model');
-const templates = require('../templates/model');
-const users = require('../users/model');
+const Order = require('./model');
+const Audio = require('../audios/model');
+const Template = require('../templates/model');
+const User = require('../users/model');
 const { errorHandler } = require('../utils/handler');
 
 const index = async (req, res, next) => {
   try {
-    const result = await orders.findAll();
+    const result = await Order.findAll();
 
     return res.json({
       result: result,
@@ -29,20 +29,20 @@ const store = async (req, res, next) => {
     const payload = req.body;
     const user = req.user;
 
-    const audio = await audios.findOne({
+    const audioData = await Audio.findOne({
       where: { id: Number(payload.audiosId) },
     });
-    const template = await templates.findOne({
+    const templateData = await Template.findOne({
       where: { id: Number(payload.templatesId) },
     });
 
-    if (!audio || !template) {
+    if (!audioData || !templateData) {
       return res.status(400).json({
         message: 'invalid audio or template',
       });
     }
 
-    const result = await orders.create({
+    const result = await Order.create({
       ...payload,
       totalPrice: Number(payload.totalPrice),
       userId: Number(user.id),
@@ -73,7 +73,7 @@ const update = async (req, res, next) => {
 
     // need to add casl for handling other user try to update orders of other user
 
-    const result = await orders.update(payload, { where: { id: id } });
+    const result = await Order.update(payload, { where: { id: id } });
 
     return res.json({
       result: result,
@@ -96,7 +96,7 @@ const destroy = async (req, res, next) => {
 
     // add casl for blocking user delete other orders of onother user
 
-    const result = await orders.destroy({ where: { id: id } });
+    const result = await Order.destroy({ where: { id: id } });
 
     return res.json({
       result: result,

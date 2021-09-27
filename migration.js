@@ -1,104 +1,104 @@
-const users = require('./app/users/model');
-const orders = require('./app/orders/model');
-const templates = require('./app/templates/model');
-const audios = require('./app/audios/model');
-const brides = require('./app/brides/model');
-const bridePhotos = require('./app/bridePhotos/model');
-const galleryPhotos = require('./app/galleryPhotos/model');
-const cardInfo = require('./app/cardInfo/model');
-const alsoInvite = require('./app/alsoInvite/model');
-const bankAccount = require('./app/bankAccount/model');
+const User = require('./app/users/model');
+const Order = require('./app/orders/model');
+const Template = require('./app/templates/model');
+const Audio = require('./app/audios/model');
+const Bride = require('./app/brides/model');
+const BridePhoto = require('./app/bridePhotos/model');
+const GalleryPhoto = require('./app/galleryPhotos/model');
+const CardInfo = require('./app/cardInfo/model');
+const AlsoInvite = require('./app/alsoInvite/model');
+const BankAccount = require('./app/bankAccount/model');
 
 // write table relation below this line
-users.hasMany(orders, {
+User.hasMany(Order, {
   foreignKey: {
     allowNull: false,
   },
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
-orders.belongsTo(users);
+Order.belongsTo(User);
 
-templates.hasMany(orders, {
+Template.hasMany(Order, {
   foreignKey: {
     allowNull: false,
   },
 });
-audios.hasMany(orders, {
+Audio.hasMany(Order, {
   foreignKey: {
     allowNull: false,
   },
 });
-orders.belongsTo(templates);
-orders.belongsTo(audios);
+Order.belongsTo(Template);
+Order.belongsTo(Audio);
 
-orders.hasOne(brides, {
+Order.hasOne(Bride, {
   foreignKey: {
     allowNull: false,
   },
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
-brides.belongsTo(orders);
+Bride.belongsTo(Order);
 
-orders.hasOne(bridePhotos, {
+Order.hasOne(BridePhoto, {
   foreignKey: {
     allowNull: false,
   },
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
-bridePhotos.belongsTo(orders);
+BridePhoto.belongsTo(Order);
 
-orders.hasMany(galleryPhotos, {
+Order.hasMany(GalleryPhoto, {
   foreignKey: {
     allowNull: false,
   },
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
-galleryPhotos.belongsTo(orders);
+GalleryPhoto.belongsTo(Order);
 
-orders.hasOne(cardInfo, {
+Order.hasOne(CardInfo, {
   foreignKey: {
     allowNull: false,
   },
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
-cardInfo.belongsTo(orders);
+CardInfo.belongsTo(Order);
 
-orders.hasMany(alsoInvite, {
+Order.hasMany(AlsoInvite, {
   foreignKey: {
     allowNull: false,
   },
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
-alsoInvite.belongsTo(orders);
+AlsoInvite.belongsTo(Order);
 
-orders.hasMany(bankAccount, {
+Order.hasMany(BankAccount, {
   foreignKey: {
     allowNull: false,
   },
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
-bankAccount.belongsTo(orders);
+BankAccount.belongsTo(Order);
 
 // sync table to database
 const syncDB = async () => {
   try {
-    await audios.sync({ force: true });
-    await templates.sync({ force: true });
-    await users.sync({ force: true });
-    await orders.sync({ force: true });
-    await brides.sync({ force: true });
-    await bridePhotos.sync({ force: true });
-    await galleryPhotos.sync({ force: true });
-    await cardInfo.sync({ force: true });
-    await alsoInvite.sync({ force: true });
-    await bankAccount.sync({ force: true });
+    await Audio.sync({ force: true });
+    await Template.sync({ force: true });
+    await User.sync({ force: true });
+    await Order.sync({ force: true });
+    await Bride.sync({ force: true });
+    await BridePhoto.sync({ force: true });
+    await GalleryPhoto.sync({ force: true });
+    await CardInfo.sync({ force: true });
+    await AlsoInvite.sync({ force: true });
+    await BankAccount.sync({ force: true });
     console.log('All models were synchronized successfully.');
   } catch (error) {
     console.log(error);

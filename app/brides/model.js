@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const brides = sequelize.define(
+const Bride = sequelize.define(
   'brides',
   {
     id: {
@@ -56,7 +56,8 @@ const brides = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = brides;
+module.exports = Bride;

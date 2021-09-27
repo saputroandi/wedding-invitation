@@ -5,12 +5,12 @@ const Sequelize = require('sequelize');
 const multer = require('multer');
 
 const { errorHandler } = require('../utils/handler');
-const audios = require('./model');
+const Audio = require('./model');
 const config = require('../config');
 
 const index = async (req, res, next) => {
   try {
-    const result = await audios.findAll();
+    const result = await Audio.findAll();
 
     return res.json({
       result: result,
@@ -50,7 +50,7 @@ const store = async (req, res, next) => {
       source.pipe(destionation);
 
       source.on('end', async () => {
-        let { dataValues } = await audios.create({
+        let { dataValues } = await Audio.create({
           audiosName: arrFileName[i],
         });
       });
@@ -80,10 +80,10 @@ const update = async (req, res, next) => {
     const { id } = req.params;
     const payload = req.body;
 
-    const audio = await audios.findOne({ where: { id: id } });
+    const audioData = await Audio.findOne({ where: { id: id } });
 
-    if (audio) {
-      const oldName = audio.dataValues.audiosName;
+    if (audioData) {
+      const oldName = audioData.dataValues.audiosName;
       const getExtension = oldName.split('.')[oldName.split('.').length - 1];
 
       const newName = payload.audiosName + '.' + getExtension;
@@ -109,7 +109,7 @@ const update = async (req, res, next) => {
       });
 
       // update table
-      const result = await audios.update(
+      const result = await Audio.update(
         {
           audiosName: newName,
         },
@@ -143,10 +143,10 @@ const destroy = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const audio = await audios.findOne({ where: { id: id } });
+    const audioData = await Audio.findOne({ where: { id: id } });
 
-    if (audio) {
-      const file = audio.dataValues.audiosName;
+    if (audioData) {
+      const file = audioData.dataValues.audiosName;
 
       const filePath = path.resolve(
         config.rootPath,
@@ -162,7 +162,7 @@ const destroy = async (req, res, next) => {
         console.log(`${file} was deleted`);
       });
 
-      const result = await audios.destroy({ where: { id: id } });
+      const result = await Audio.destroy({ where: { id: id } });
 
       return res.json({
         result: result,

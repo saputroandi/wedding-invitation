@@ -3,7 +3,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const users = require('../users/model');
+const User = require('../users/model');
 const config = require('../config');
 const { errorHandler } = require('../utils/handler');
 
@@ -11,7 +11,7 @@ const register = async (req, res, next) => {
   try {
     const payload = req.body;
 
-    const result = await users.create(payload);
+    const result = await User.create(payload);
 
     res.json({
       result: result,
@@ -30,10 +30,10 @@ const register = async (req, res, next) => {
 
 async function localStrategy(email, password, done) {
   try {
-    const user = await users.findOne({ where: { email: email } });
-    if (!user) return done();
-    if (bcrypt.compareSync(password, user.dataValues.password)) {
-      return done(null, user);
+    const userData = await User.findOne({ where: { email: email } });
+    if (!userData) return done();
+    if (bcrypt.compareSync(password, userData.dataValues.password)) {
+      return done(null, userData);
     }
   } catch (err) {
     done(err, null);

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const orders = sequelize.define(
+const Order = sequelize.define(
   'orders',
   {
     id: {
@@ -35,7 +35,8 @@ const orders = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = orders;
+module.exports = Order;

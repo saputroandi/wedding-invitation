@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const galleryPhotos = sequelize.define(
+const GalleryPhoto = sequelize.define(
   'galleryPhotos',
   {
     id: {
@@ -20,7 +20,8 @@ const galleryPhotos = sequelize.define(
   },
   {
     // Other model options go here
+    underscored: true,
   }
 );
 
-module.exports = galleryPhotos;
+module.exports = GalleryPhoto;
