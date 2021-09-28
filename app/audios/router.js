@@ -17,9 +17,9 @@ const upload = multer({ storage: storage });
 
 const audiosController = require('./controller');
 
-router.get('/', audiosController.index);
-router.post('/', upload.array('audiosName', 5), audiosController.store);
-router.put('/:id', multer().none(), audiosController.update);
-router.delete('/:id', audiosController.destroy);
+router.get('/audios', audiosController.index);
+router.post('/audios', upload.array('audiosName', 5), audiosController.store);
+router.put('/audios/:id', multer().none(), audiosController.update);
+router.delete('/audios/:id', audiosController.destroy);
 
 module.exports = router;
