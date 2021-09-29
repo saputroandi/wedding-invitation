@@ -35,6 +35,27 @@ const store = async (req, res, next) => {
       return audio.filename;
     });
 
+    // validating file uploaded manually
+    const arrErrorValidateFile = [];
+
+    for (let i = 0; i < audiosPayload.length; i++) {
+      const resultValidateFile = await Audio.findOne({
+        where: { audiosName: arrFileName[i] },
+      });
+
+      if (resultValidateFile)
+        arrErrorValidateFile.push(resultValidateFile.audiosName);
+    }
+    // end of validating file
+
+    if (arrErrorValidateFile && arrErrorValidateFile.length > 0) {
+      return res.status(400).json({
+        error: 1,
+        messages: 'file already exist',
+        data: arrErrorValidateFile,
+      });
+    }
+
     let arrTmpPath = audiosPayload.map((audio, idx) => {
       return audio.path;
     });

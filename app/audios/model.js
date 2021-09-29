@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, ValidationError } = require('sequelize');
 const sequelize = require('../utils/database');
 
 const Audio = sequelize.define(
@@ -12,7 +12,14 @@ const Audio = sequelize.define(
     audiosName: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      validate: {
+        async uniqueName(audiosName) {
+          const audioData = await Audio.findOne({
+            where: { audiosName: audiosName },
+          });
+          if (audioData) throw new ValidationError('audiosName has been taken');
+        },
+      },
     },
   },
   {
