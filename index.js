@@ -11,6 +11,8 @@ const audiosRouter = require('./app/audios/router');
 const ordersRouter = require('./app/orders/router');
 const bridesRouter = require('./app/brides/router');
 const cardInfoRouter = require('./app/cardInfo/router');
+const alsoInviteRouter = require('./app/alsoInvite/router');
+const bankAccountRouter = require('./app/bankAccount/router');
 
 const app = express();
 
@@ -27,6 +29,8 @@ app.use('/api', audiosRouter);
 app.use('/api', ordersRouter);
 app.use('/api', bridesRouter);
 app.use('/api', cardInfoRouter);
+app.use('/api', alsoInviteRouter);
+app.use('/api', bankAccountRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const CardInfo = require('./model');
+const BankAccount = require('./model');
 const Order = require('../orders/model');
 const { errorHandler } = require('../utils/handler');
 
@@ -16,10 +16,10 @@ const store = async (req, res, next) => {
       });
     }
 
-    const result = await CardInfo.create(payload);
+    const result = await BankAccount.bulkCreate(payload, { validate: true });
 
     return res.json({
-      data: result,
+      result: result,
     });
   } catch (e) {
     if (e instanceof Sequelize.ValidationError) {
@@ -33,10 +33,10 @@ const store = async (req, res, next) => {
   }
 };
 
-const update = async (req, res, next) => {
+const updateOne = async (req, res, next) => {
   try {
     const { orderId } = req.params;
-    const payload = req.body;
+    const { inviteId, ...payload } = req.body;
 
     const orderExist = await Order.findOne({ where: { id: orderId } });
 
@@ -46,8 +46,8 @@ const update = async (req, res, next) => {
       });
     }
 
-    const result = await CardInfo.update(payload, {
-      where: { orderId: orderId },
+    const result = await BankAccount.update(payload, {
+      where: { id: inviteId },
     });
 
     return res.json({
@@ -65,9 +65,10 @@ const update = async (req, res, next) => {
   }
 };
 
-const destroy = async (req, res, next) => {
+const destroyOne = async (req, res, next) => {
   try {
     const { orderId } = req.params;
+    const { inviteId, ...payload } = req.body;
 
     const orderExist = await Order.findOne({ where: { id: orderId } });
 
@@ -77,7 +78,9 @@ const destroy = async (req, res, next) => {
       });
     }
 
-    const result = await CardInfo.destroy({ where: { id: orderId } });
+    const result = await BankAccount.destroy({
+      where: { id: inviteId },
+    });
 
     return res.json({
       result: result,
@@ -96,6 +99,6 @@ const destroy = async (req, res, next) => {
 
 module.exports = {
   store,
-  update,
-  destroy,
+  updateOne,
+  destroyOne,
 };
