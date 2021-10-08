@@ -66,9 +66,9 @@ const store = async (req, res, next) => {
 
     for (let i = 0; i < audiosPayload.length; i++) {
       let source = fs.createReadStream(arrTmpPath[i]);
-      let destionation = fs.createWriteStream(arrTargetPath[i]);
+      let destination = fs.createWriteStream(arrTargetPath[i]);
 
-      source.pipe(destionation);
+      source.pipe(destination);
 
       source.on('end', async () => {
         let { dataValues } = await Audio.create({

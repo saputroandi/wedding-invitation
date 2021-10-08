@@ -3,7 +3,7 @@ const Order = require('./app/orders/model');
 const Template = require('./app/templates/model');
 const Audio = require('./app/audios/model');
 const Bride = require('./app/brides/model');
-const BridePhoto = require('./app/bridePhotos/model');
+// const BridePhoto = require('./app/bridePhotos/model');
 const GalleryPhoto = require('./app/galleryPhotos/model');
 const CardInfo = require('./app/cardInfo/model');
 const AlsoInvite = require('./app/alsoInvite/model');
@@ -41,14 +41,14 @@ Order.hasOne(Bride, {
 });
 Bride.belongsTo(Order);
 
-Order.hasOne(BridePhoto, {
-  foreignKey: {
-    allowNull: false,
-  },
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
-});
-BridePhoto.belongsTo(Order);
+// Order.hasOne(BridePhoto, {
+//   foreignKey: {
+//     allowNull: false,
+//   },
+//   onDelete: 'CASCADE',
+//   onUpdate: 'CASCADE',
+// });
+// BridePhoto.belongsTo(Order);
 
 Order.hasMany(GalleryPhoto, {
   foreignKey: {
@@ -94,7 +94,7 @@ const syncDB = async () => {
     await User.sync({ force: true });
     await Order.sync({ force: true });
     await Bride.sync({ force: true });
-    await BridePhoto.sync({ force: true });
+    // await BridePhoto.sync({ force: true });
     await GalleryPhoto.sync({ force: true });
     await CardInfo.sync({ force: true });
     await AlsoInvite.sync({ force: true });
