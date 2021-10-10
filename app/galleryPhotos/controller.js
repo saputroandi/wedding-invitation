@@ -28,6 +28,7 @@ const index = async (req, res, next) => {
 const store = async (req, res, next) => {
   try {
     let photosPayload = req.files;
+    let { orderId } = req.params;
 
     let arrFileName = photosPayload.map((photo, idx) => {
       return photo.filename;
@@ -53,6 +54,7 @@ const store = async (req, res, next) => {
       source.on('end', async () => {
         let { dataValues } = await GalleryPhoto.create({
           name: arrFileName[i],
+          orderId: orderId,
         });
       });
 

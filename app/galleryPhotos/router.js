@@ -5,7 +5,11 @@ const galleryPhotosController = require('./controller');
 const { galleryPhotosMiddleware } = require('./middleware');
 
 router.get('/gallery', galleryPhotosController.index);
-router.post('/audios', galleryPhotosMiddleware, galleryPhotosController.store);
-router.delete('/audios/:id', galleryPhotosController.destroy);
+router.post(
+  '/gallery/:orderId',
+  galleryPhotosMiddleware,
+  galleryPhotosController.store
+);
+router.delete('/gallery/:id', galleryPhotosController.destroy);
 
 module.exports = router;

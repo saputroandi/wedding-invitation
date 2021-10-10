@@ -1,4 +1,5 @@
 const os = require('os');
+const path = require('path');
 const multer = require('multer');
 
 // keep original name
@@ -14,7 +15,24 @@ let storage = multer.diskStorage({
 
 const galleryPhotosMiddleware = (req, res, next) => {
   // temporary destination for storing file
-  const upload = multer({ storage: storage }).array('galleryPhotosName', 8);
+  const upload = multer({
+    storage: storage,
+    limits: { files: 8, fileSize: 4000000 },
+    fileFilter: function (req, file, cb) {
+      const filetypes = /jpeg|jpg|png|gif/;
+
+      const extname = filetypes.test(
+        path.extname(file.originalname).toLowerCase()
+      );
+
+      const mimetype = filetypes.test(file.mimetype);
+
+      if (!mimetype || !extname) {
+        return cb(new multer.MulterError('Only images are allowed'));
+      }
+      cb(null, true);
+    },
+  }).array('galleryPhotosName', 8);
 
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
