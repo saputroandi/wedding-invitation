@@ -2,9 +2,19 @@ const Sequelize = require('sequelize');
 const Bride = require('./model');
 const Order = require('../orders/model');
 const { errorHandler } = require('../utils/handler');
+const { policyFor } = require('../utils/policy');
 
 const store = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('create', 'Bride')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { orderId } = req.params;
     const payload = req.body;
 
@@ -35,6 +45,15 @@ const store = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('update', 'Bride')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { orderId } = req.params;
     const payload = req.body;
 
@@ -67,6 +86,15 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('destroy', 'Bride')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { orderId } = req.params;
 
     const result = await Bride.destroy({ where: { id: orderId } });

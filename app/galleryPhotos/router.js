@@ -4,7 +4,7 @@ const multer = require('multer');
 const galleryPhotosController = require('./controller');
 const { galleryPhotosMiddleware } = require('./middleware');
 
-router.get('/gallery', galleryPhotosController.index);
+router.get('/gallery/:orderId', galleryPhotosController.index);
 router.post(
   '/gallery/:orderId',
   galleryPhotosMiddleware,

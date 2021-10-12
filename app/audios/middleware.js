@@ -1,5 +1,6 @@
 const os = require('os');
 const multer = require('multer');
+const path = require('path');
 
 // keep original name
 let storage = multer.diskStorage({
@@ -13,7 +14,24 @@ let storage = multer.diskStorage({
 
 const audioMiddleware = (req, res, next) => {
   // temporary destination for storing file
-  const upload = multer({ storage: storage }).array('audiosName', 5);
+  const upload = multer({
+    storage: storage,
+    limits: 5,
+    fileFilter: function (req, file, cb) {
+      const filetypes = /mp3|mpeg/;
+
+      const extname = filetypes.test(
+        path.extname(file.originalname).toLowerCase()
+      );
+
+      const mimetype = filetypes.test(file.mimetype);
+
+      if (!mimetype || !extname) {
+        return cb(new multer.MulterError('Only mp3 or mpeg are allowed'));
+      }
+      cb(null, true);
+    },
+  }).array('audiosName', 5);
 
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {

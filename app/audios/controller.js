@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const multer = require('multer');
+const { policyFor } = require('../utils/policy');
 
 const { errorHandler } = require('../utils/handler');
 const Audio = require('./model');
@@ -29,6 +30,15 @@ const index = async (req, res, next) => {
 
 const store = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('create', 'Audios')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     let audiosPayload = req.files;
 
     let arrFileName = audiosPayload.map((audio, idx) => {
@@ -98,6 +108,15 @@ const store = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('update', 'Audios')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { id } = req.params;
     const payload = req.body;
 
@@ -162,6 +181,15 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('destroy', 'Audios')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { id } = req.params;
 
     const audioData = await Audio.findOne({ where: { id: id } });

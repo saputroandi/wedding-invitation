@@ -19,7 +19,7 @@ const galleryPhotosMiddleware = (req, res, next) => {
     storage: storage,
     limits: { files: 8, fileSize: 4000000 },
     fileFilter: function (req, file, cb) {
-      const filetypes = /jpeg|jpg|png|gif/;
+      const filetypes = /jpeg|jpg|png/;
 
       const extname = filetypes.test(
         path.extname(file.originalname).toLowerCase()

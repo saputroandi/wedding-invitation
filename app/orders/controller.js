@@ -4,9 +4,19 @@ const Audio = require('../audios/model');
 const Template = require('../templates/model');
 const User = require('../users/model');
 const { errorHandler } = require('../utils/handler');
+const { policyFor } = require('../utils/policy');
 
 const index = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('read', 'Order')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const result = await Order.findAll();
 
     return res.json({
@@ -26,6 +36,16 @@ const index = async (req, res, next) => {
 
 const store = async (req, res, next) => {
   try {
+    // need to add slug generator
+    let policy = policyFor(req.user);
+
+    if (!policy.can('make', 'Order')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const payload = req.body;
     const user = req.user;
 
@@ -67,6 +87,15 @@ const store = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('update', 'Order')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { id } = req.params;
     const payload = req.body;
     const user = req.user;
@@ -92,6 +121,15 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('destroy', 'Order')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { id } = req.params;
 
     // add casl for blocking user delete other orders of onother user

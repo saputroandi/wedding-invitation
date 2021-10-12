@@ -5,10 +5,13 @@ const path = require('path');
 const GalleryPhoto = require('./model');
 const config = require('../config');
 const { errorHandler } = require('../utils/handler');
+const { policyFor } = require('../utils/policy');
 
 const index = async (req, res, next) => {
   try {
-    const result = await GalleryPhoto.findAll();
+    const { orderId } = req.params;
+
+    const result = await GalleryPhoto.findAll({ where: { orderId: orderId } });
 
     return res.json({
       result: result,

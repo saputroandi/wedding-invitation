@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const { errorHandler } = require('../utils/handler');
 const Template = require('./model');
+const { policyFor } = require('../utils/policy');
 
 const index = async (req, res, next) => {
   try {
@@ -23,6 +24,15 @@ const index = async (req, res, next) => {
 
 const store = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('create', 'Template')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const payload = req.body;
 
     const result = await Template.create(payload);
@@ -45,6 +55,15 @@ const store = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('update', 'Template')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { id } = req.params;
     const payload = req.body;
 
@@ -72,6 +91,15 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
+    let policy = policyFor(req.user);
+
+    if (!policy.can('destroy', 'Template')) {
+      return res.json({
+        error: 1,
+        message: `Anda tidak memiliki akses`,
+      });
+    }
+
     const { id } = req.params;
 
     const result = await Template.destroy({ where: { id: id } });
